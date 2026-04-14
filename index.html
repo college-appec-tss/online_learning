@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASPADE</title>
+
+<style>
+:root{--bg:#050816;--card:#0f172a;--primary:#2563eb;--accent:#22c55e;--text:#e2e8f0;--muted:#94a3b8}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Arial}
+body{background:linear-gradient(135deg,#050816,#0b1228);color:var(--text)}
+.container{max-width:950px;margin:auto;padding:20px}
+.hero{text-align:center;padding:70px 20px 30px;animation:fadeIn 1s ease}
+.hero h1{font-size:38px;margin-bottom:10px}
+.hero p{color:var(--muted);max-width:650px;margin:auto}
+.badges{margin-top:15px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.badge{background:rgba(255,255,255,0.08);padding:6px 12px;border-radius:999px;font-size:12px}
+.card{background:rgba(255,255,255,0.05);backdrop-filter:blur(12px);border-radius:16px;padding:20px;margin-top:20px;box-shadow:0 10px 30px rgba(0,0,0,0.3);animation:slideUp .6s ease}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px}
+h2{margin-bottom:10px}
+.price{font-size:30px;color:var(--accent);font-weight:bold;margin:10px 0}
+.btn{width:100%;padding:14px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--primary),#06b6d4);color:white;font-weight:bold;margin-top:15px;cursor:pointer;transition:.3s}
+.btn:hover{transform:scale(1.04)}
+.btn-secondary{background:transparent;border:1px solid rgba(255,255,255,0.2)}
+.locked{filter:blur(6px);pointer-events:none}
+.steps li{margin-bottom:8px;color:var(--muted)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;justify-content:center;align-items:center}
+.modal-box{background:var(--card);padding:25px;border-radius:16px;width:90%;max-width:360px;animation:zoom .3s ease}
+.network{padding:12px;border-radius:10px;margin-top:10px;cursor:pointer;text-align:center;font-weight:bold}
+.mtn{background:#facc15;color:black}.airtel{background:#ef4444}
+.toast{position:fixed;bottom:20px;right:20px;background:#111827;padding:10px 15px;border-radius:10px;display:none}
+.counter{font-size:12px;color:#22c55e;margin-top:10px}
+.floating{position:fixed;bottom:80px;left:20px;background:#111827;padding:10px 12px;border-radius:10px;font-size:12px;display:none}
+.timer{color:#f87171;font-size:13px;margin-top:6px}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes zoom{from{transform:scale(.8)}to{transform:scale(1)}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="hero">
+  <h1>Pass Exams Faster. Learn Smarter.</h1>
+  <p>Access structured notes, exam papers and coding basics used by students to improve results quickly.</p>
+  <div class="badges">
+    <div class="badge">✔ Easy</div><div class="badge">✔ Fast</div><div class="badge">✔ Mobile</div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>🎯 What You Gain</h2>
+  <div class="grid">
+    <div>
+      <p>📈 Improve results quickly</p>
+      <p>📚 Simplified notes</p>
+      <p>🧠 Easy understanding</p>
+    </div>
+    <div>
+      <p>💻 Learn coding</p>
+      <p>📄 Exam papers</p>
+      <p>⚡ Study anywhere</p>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>⚙️ How It Works</h2>
+  <ul class="steps">
+    <li>1. Click Unlock</li>
+    <li>2. Pay 500 RWF</li>
+    <li>3. Submit proof</li>
+    <li>4. Get access</li>
+  </ul>
+  <div class="timer" id="timer">Offer ends in: 04:59</div>
+</div>
+
+<div class="card">
+  <h2>🔥 Student Activity</h2>
+  <p class="counter">+127 students joined this week</p>
+</div>
+
+<div class="card">
+  <h2>💳 Access Plan</h2>
+  <p class="price">500 RWF</p>
+  <button class="btn" onclick="openModal()">Unlock Now</button>
+  <button class="btn btn-secondary" onclick="goToForm()">I Already Paid</button>
+</div>
+
+<div class="card">
+  <h2>📚 Preview</h2>
+  <div id="content" class="locked">
+    <p>Math Notes</p>
+    <p>Physics Pack</p>
+    <p>Programming Guide</p>
+  </div>
+</div>
+
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <h3>Complete Payment</h3>
+    <div class="network mtn" onclick="pay('mtn')">MTN</div>
+    <div class="network airtel" onclick="pay('airtel')">Airtel</div>
+    <button class="btn" onclick="goToForm()">Submit Proof</button>
+  </div>
+</div>
+
+<div class="toast" id="toast">Request Sent ✔</div>
+<div class="floating" id="floating">John just unlocked access</div>
+
+<script>
+function openModal(){document.getElementById('modal').style.display='flex'}
+
+function pay(type){let code='';if(type==='mtn')code='*182*1*1*0798809775#';if(type==='airtel')code='*185*1*1*0798809775#';window.location.href='tel:'+encodeURIComponent(code)}
+
+function goToForm(){window.location.href='https://www.jotform.com/build/261034324184045'}
+
+// fake live popups
+setInterval(()=>{
+ const names=['Eric','John','Alice','David','Sarah'];
+ const el=document.getElementById('floating');
+ el.innerText=names[Math.floor(Math.random()*names.length)]+' just joined';
+ el.style.display='block';
+ setTimeout(()=>el.style.display='none',3000);
+},6000);
+
+// countdown timer
+let t=300;
+setInterval(()=>{
+ if(t>0){t--;let m=Math.floor(t/60);let s=t%60;
+ document.getElementById('timer').innerText=`Offer ends in: ${m}:${s<10?'0':''}${s}`}
+},1000);
+
+// session lock (simple)
+document.addEventListener('contextmenu',e=>e.preventDefault());
+
+</script>
+</body>
+</html>
